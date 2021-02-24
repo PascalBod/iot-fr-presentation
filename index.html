@@ -51,6 +51,10 @@
 						</thead>
 						<tbody>
 							<tr>
+								<td>24/02/2021</td>
+								<td>ajout de liens vers TP STM32, ESP32 et Bluetooh LE</td>
+							</tr>
+							<tr>
 								<td>13/02/2021</td>
 								<td>modification de la première page</td>
 							</tr>
@@ -173,6 +177,21 @@
 						</ul>
 					</section>
 					<section> <h3><a href="#/conclusion">Conclusion</a></h3>
+					</section>
+					<section> <h3>Travaux pratiques</h3>
+						<ul>
+							<li>équipement connecté:
+								<ul>
+									<li><a href="#/hoSTM32SampleApplication">une application <em>bare metal</em> pour la carte NUCLEO-L476RG</em></a></li>
+									<li><a href="#/hoESP32SampleApplication">une application pour la carte ESP32-DevKitC</a></li>
+								</ul>
+							</li>
+							<li>communications:
+								<ul>
+									<li><a href="#/hoBluetoothRuuvi">réception et décodage de messages BLE émis par un équipement Ruuvi</a></li>
+								</ul>
+							</li>
+						</ul>
 					</section>
 				</section>
 				<section>
@@ -1134,6 +1153,28 @@
 							<li>la partie générant les événements doit rester active</li>
 						</ul>
 					</section>
+					<section id="hoSTM32SampleApplication"> <h4>TP STM32</h4>
+						<img src="images/nucleoL476RG.png">
+						<ul>
+							<li><a href="https://www.st.com/en/microcontrollers-microprocessors/stm32-32-bit-arm-cortex-mcus.html" target="_blank">STM32</a>: 
+								famille de microcontrôleurs 32 bits basés sur un processeur Arm Cortex</li>
+							<li>différentes carte de développement sont disponibles</li>	
+							<li>RTOS (FreeRTOS, Arm Mbed) ou <em>bare metal</em></li>
+							<li><a href="https://github.com/PascalBod/lm20.1-stm32cubeide" target="_blank">
+								écrire une application <em>bare metal</em> pour la carte NUCLEO-L476RG</a></li>
+						</ul>
+					</section>
+					<section id="hoESP32SampleApplication"> <h4>TP ESP32</h4>
+						<img src="images/ESP32-DevKitC.png">
+						<ul>
+							<li><a href="https://www.espressif.com/en/products/socs/esp32" target="_blank">ESP32</a>: 
+								un microcontrôleur Wi-Fi et Bluetooth</li>
+							<li>différentes cartes de développement sont disponibles</li>
+							<li>RTOS (FreeRTOS) et/ou librairies dédiées</li>
+							<li><a href="https://github.com/PascalBod/lm20.1-esp32-eclipse" target="_blank">
+								écrire une application pour la carte ESP32-DevKitC</a></li>
+						</ul>
+					</section>
 					<section> <h3>Notre exemple</h3>
 						<ul>
 							<li>quel équipement choisir ?
@@ -2087,6 +2128,25 @@
 							</li>
 						</ul>
 						<div class="pbverysmall">Source : <a href="https://www.bluetooth.com/" title="Bluetooth SIG" target="_blank">Bluetooth SIG</a></div>
+					</section>
+					<section id="hoBluetoothRuuvi"> <h4>TP Bluetooth</h4>
+						<p><a href="https://github.com/PascalBod/ESPIDFRuuviTag" target="_blank">
+							réception et décodage de messages émis par un équipement Ruuvi</a></p>
+						<p>Eléments:</p>
+						<img src="images/ruuvitag-medium.png" height="100">
+						<img src="images/ESP32-DevKitC.png" height="120">
+						<ul>
+							<li>A <a href="https://ruuvi.com/ruuvitag-specs/" target="_blank">équipement Ruuvi</a>
+								- un n&oelig;ud de capteurs libre (matériel et logiciel)
+								<ul>
+									<li>cpateurs humidité + pression + température</li>
+									<li>accéléromètre</li>
+									<li>Bluetooth Low Energy</li>
+								</ul>
+							</li>
+							<li>An <a href="https://www.espressif.com/en/products/devkits/esp32-devkitc/overview" target="_blank">ESP32-DevKitC</a> - 
+								une carte basée sur l'ESP32, un microcontrôleur Wi-Fi et Bluetooth</li>
+						</ul>
 					</section>
 					<section> <h4> <img src="images/zigbeeLogo.png"> </h4>
 						<ul>
