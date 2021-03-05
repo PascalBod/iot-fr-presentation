@@ -52,7 +52,7 @@
 						<tbody>
 							<tr>
 								<td>05/03/2021</td>
-								<td>ajout de comment naviguer</td>
+								<td>ajout de comment naviguer, TP UDP</td>
 							</tr>
 							<tr>
 								<td>24/02/2021</td>
@@ -205,6 +205,7 @@
 							<li>communications:
 								<ul>
 									<li><a href="#/hoBluetoothRuuvi">réception et décodage de messages BLE émis par un équipement Ruuvi</a></li>
+									<li><a href="#/hoUdpOverWifi">UDP sur Wi-Fi</a></li>
 								</ul>
 							</li>
 						</ul>
@@ -1169,7 +1170,7 @@
 							<li>la partie générant les événements doit rester active</li>
 						</ul>
 					</section>
-					<section id="hoSTM32SampleApplication"> <h4>TP STM32</h4>
+					<section id="hoSTM32SampleApplication"> <h4>TP : STM32</h4>
 						<img src="images/nucleoL476RG.png">
 						<ul>
 							<li><a href="https://www.st.com/en/microcontrollers-microprocessors/stm32-32-bit-arm-cortex-mcus.html" target="_blank">STM32</a>: 
@@ -1180,7 +1181,7 @@
 								écrire une application <em>bare metal</em> pour la carte NUCLEO-L476RG</a></li>
 						</ul>
 					</section>
-					<section id="hoESP32SampleApplication"> <h4>TP ESP32</h4>
+					<section id="hoESP32SampleApplication"> <h4>TP : ESP32</h4>
 						<img src="images/ESP32-DevKitC.png">
 						<ul>
 							<li><a href="https://www.espressif.com/en/products/socs/esp32" target="_blank">ESP32</a>: 
@@ -2145,7 +2146,7 @@
 						</ul>
 						<div class="pbverysmall">Source : <a href="https://www.bluetooth.com/" title="Bluetooth SIG" target="_blank">Bluetooth SIG</a></div>
 					</section>
-					<section id="hoBluetoothRuuvi"> <h4>TP Bluetooth</h4>
+					<section id="hoBluetoothRuuvi"> <h4>TP : messages Bluetooth</h4>
 						<p><a href="https://github.com/PascalBod/ESPIDFRuuviTag" target="_blank">
 							réception et décodage de messages émis par un équipement Ruuvi</a></p>
 						<p>Eléments:</p>
@@ -2448,6 +2449,21 @@
 							<li>beaucoup de communication sur MQTT et CoAP, mais difficile de déterminer leur réel taux d'utilisation</li>
 							<li>sur TCP, pas très compliqué de définir son propre protocole, plus léger que MQTT</li>
 							<li>sur UDP (plus généralement : transport de messages avec perte) : plus compliqué</li>
+						</ul>
+					</section>
+					<section id="hoUdpOverWifi"> <h4>TP : UDP sur Wi-Fi</h4>
+						<p>Eléments :</p>
+						<ul>
+							<li>un <a href="https://www.espressif.com/en/products/devkits/esp32-devkitc/overview" target="_blank">ESP32-DevKitC</a></li>
+							<li>un point d'accès Wi-Fi</li>
+							<li>un ordinateur sous Linux ou macOS, adressable depuis le point d'accès Wi-Fi</li>
+						</ul>
+						<p>TP :</p>
+						<ul>
+							<li><a href="https://github.com/PascalBod/ESPIDFUdpSender" target="_blank">
+								une application tournant sur l'ESP32-DevKitC se connecte au point d'accès</a></li>
+							<li>un serveur UDP très simple est démarré sur l'ordinateur</li>
+							<li>l'application envoie des messages au serveur en utilisant des datagrammes UDP</li>
 						</ul>
 					</section>
 					<section id="communications-8"> <h3>Intégration à l'Internet</h3>
