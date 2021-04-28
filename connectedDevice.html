@@ -1544,7 +1544,7 @@
 						title="ESP-IDF UDP Sender" target="_blank">ESP-IDF UDP Sender</a></div>
 				</section>
 				<section>
-					<h6>Tampon tournant</h6>
+					<h6>Tampon circulaire</h6>
 					<h6><em>(ring buffer</em> ou <em>circular buffer)</em></h6>
 				</section>
 				<section>
@@ -1570,6 +1570,9 @@
 						<li>en bout de tableau : on reboucle à partir du début</li>
 						<li>&rArr; tampon <em>circulaire</em></li>
 					</ul>
+				</section>
+				<section>
+					<img src="images/ringBuffer-3.png">
 				</section>
 				<section>
 					<p class="pbsmaller">Une implémentation :</p>
@@ -1628,9 +1631,12 @@
 					</p>
 				</section>
 				<section>
+					<p class="pbsmaller">Exemple d'utilisation : messages GNSS</p>
+					<img src="images/backgroundTaskInterruptsRingBuffer.png">
+				</section>
+				<section>
 					<p>Bien entendu, automates et tampons circulaires s'utilisent également avec un RTOS ou un OS.</p>
 				</section>
-
 				<section id="hoSTM32SampleApplication">
 					<h4>TP : STM32</h4>
 					<img src="images/nucleoL476RG.png">
