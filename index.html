@@ -51,6 +51,10 @@
 						</thead>
 						<tbody>
 							<tr>
+								<td>02/05/2021</td>
+								<td>retours d'expériences</td>
+							</tr>
+							<tr>
 								<td>28/04/2021</td>
 								<td>détails tampon circulaire</td>
 							</tr>
@@ -186,6 +190,7 @@
 							<li><a href="#/gestionDeProjets-3">problèmes</a></li>
 							<li><a href="#/gestionDeProjets-4">élément de solution : être agile</a></li>
 							<li><a href="#/gestionDeProjets-5">adaptation à un projet objets connectés</a></li>
+							<li><a href="#/gestionDeProjets-6">études de cas</a></li>
 						</ul>
 					</section>
 					<section> <h3><a href="#/conclusion">Conclusion</a></h3>
@@ -1502,42 +1507,59 @@
 									<li>transmission des données respectant l'ordre</li>
 								</ul>
 							</li>
-							<li>solution 1 : le temps
+							<li class="fragment">solution 1 : le temps
 								<ul>
 									<li>attendre une durée minimale entre deux messages</li>
 									<li>durée entre deux octets successifs d'un même message doit être inférieure à la durée entre messages</li>
 									<li>la durée entre deux messages doit être supérieure à la gigue du réseau</li>
 								</ul>
 							</li>
-							<li>solution 2 : une délimitation
+							<li class="fragment">solution 2 : une délimitation
 								<ul>
 									<li>séquence de début spécifique</li>
 								</ul>
 							</li>
 						</ul>
 					</section>
-					<section> <h4>Transparence</h4>
+					<section> <h4>Problèmes avec le contenu du message</h4>
+					</section>
+					<section> <h5>Problème 1</h5>
 						<ul>
 							<li>supposons que l'on utilise la solution 2, avec l'octet de valeur 01 comme délimiteur :</li>
 							<img src="images/framing1.png">
 							<li>question : comment transmettre la valeur 01 dans un message ?</li>
-							<li>c'est le problème de la "transparence"</li>
+							<li>c'est le problème de la <strong>transparence</strong></li>
 						</ul>
 					</section>
-					<section> <h4>Boutisme <em>(endianness)</em></h4>
+					<section> <h5>Problème 2</h5>
 						<p>L'entier 32 bits 11223344 peut être stocké en mémoire de deux façons :</p>
 						<img src="images/endianness1.png">
 					</section>
-					<section>
-						<p>Gros-boutistes : microprocesseurs 68000, microcontrôleurs AVR32, etc.</p>
-						<p>Petits-boutistes : microprocesseurs x86, etc.</p>
-						<p>Bi-boutistes : c&oelig;urs Arm, etc.</p>
+					<section> 
+						<ul>
+							<li>question : comment transmettre un entier de 32 bits entre deux processeurs utilisant chacun
+								la mémoire de façon différente ?
+							</li>
+							<li>c'est le problème du <strong>boutisme</strong> <em>(endianness)</em></li>
+						</ul>
 					</section>
 					<section>
-						<p>Problème : comment une carte à microcontrôleur gros-boutiste peut-elle échanger 
-							des entiers de 32 bits avec un ordinateur petit-boutiste ?</p>
+						<p>Vocabulaire :</p>
+						<ul>
+							<li><strong>gros-boutisme</strong> <em>(big-endianness)</em> : octet de poids fort à l'adresse la plus basse</li>
+							<li><strong>petit-boutisme</strong> <em>(little-endianness)</em> : octet de poids faible à l'adresse la plus basse</li>
+							<li><strong>bi-boutisme</strong> <em>(bi-endianness)</em> : les deux sont possibles</li>
+						</ul>
+						<img src="images/endianness2.png">
 					</section>
-					<section> <h4>Sérialisation</h4>
+					<section>
+						<ul>
+							<li>gros-boutistes : microprocesseurs 68000, microcontrôleurs AVR32, etc.</li>
+							<li>petits-boutistes : RISC-V, microprocesseurs x86, etc.</li>
+							<li>bi-boutistes : c&oelig;urs Arm, Alpha, etc.</li>
+						</ul>
+					</section>
+					<section> <h5>Problème 3</h5>
 						<p>Comment échanger des structures de données entre ordinateurs ?</p>
 						<pre><code data-trim data-noescape>
 								struct sensor {
@@ -1549,15 +1571,19 @@
 									} location;
 								};
 						</code></pre>
+						<ul>
+							<li>généralisation du problème du boutisme</li>
+							<li>c'est le problème de la <strong>sérialisation</strong></li>
+						</ul>
 					</section>
 					<section>
 						<p>Pour ces problèmes (délimitation, transparence, boutisme, sérialisation) :</p>
 						<ul>
 							<li>plus ou moins compliqué de définir sa propre solution</li>
-							<li>si pas d'expérience, choisir une solution existante !</li>
+							<li>si pas d'expérience préalable, choisir une solution existante !</li>
 						</ul>
 					</section>
-					<section> <h4>Sérialisation et boutisme</h4>
+					<section> <h4>Sérialisation, boutisme et délimitation</h4>
 						<ul>
 							<li>ASN.1 (Abstract Syntax Notation number 1):
 								<ul>
@@ -1583,7 +1609,7 @@
 						</ul>
 						<div class="pbverysmall">Source : <a href="https://developers.google.com/protocol-buffers/" title="Google" target="_blank">Google</a></div>
 					</section>
-					<section> <h4>Sérialisation et boutisme</h4>
+					<section> <h4>Sérialisation, boutisme et délimitation</h4>
 						<ul>
 							<li>CBOR (Concise Binary Object Representation) :
 								<ul>
@@ -1596,7 +1622,7 @@
 						</ul>
 						<div class="pbverysmall">Source : <a href="https://cbor.io/" title="CBOR" target="_blank">CBOR</a></div>
 					</section>
-					<section> <h4>Sérialisation et boutisme</h4>
+					<section> <h4>Sérialisation, boutisme et délimitation</h4>
 						<p class="pbcenter">Pour besoin précis et spécifique : assez facile de définir son propre formatage</p>
 					</section>
 					<section> <h4>Communication (+ délimitation et transparence)</h4>
@@ -1660,7 +1686,8 @@
 						</ul>
 					</section>
 					<section> <h4>Une solution : SCHC</h4>
-						<p class="pbcenter">Static Context Header Compression - RFC 8724</p>
+						<p class="pbcenter">Static Context Header Compression - 
+							<a href="https://www.rfc-editor.org/rfc/rfc8724.html" target="_blank">RFC 8724</a></p>
 						<ul>
 							<li>sur réseaux LPWAN, la nature des flux est prédictible</li>
 							<li>&rArr; stockage du contexte dans l'équipement et dans le réseau</li>
@@ -1760,6 +1787,7 @@
 							<li>passage à l'échelle (> 1000 équipements ?)</li>
 							<li>peut éviter d'avoir à développer des composants techniques complexes</li>
 						</ul>
+						<div class="fragment">
 						<p class="pbcenter">Inconvénients d'une plate-forme :</p>
 						<ul>
 							<li>peut rendre plus complexe le développement d'un système</li>
@@ -1767,6 +1795,7 @@
 							<li>généricité &rArr; peut freiner le développement de systèmes sur mesure</li>
 							<li>mutualisation &rArr; peut obliger à des évolutions non désirées</li>
 						</ul>
+						</div>
 					</section>
 				</section>
 				<section>
@@ -1829,7 +1858,14 @@
 						<img src="images/projectPhases1.png">
 					</section>
 					<section id="gestionDeProjets-2"> <h3>Projet objets connectés</h3>
-						<img src="images/projectPhases2.png">
+						<div class="r-stack">
+							<img src="images/projectPhases2a.png">
+							<img class="fragment" src="images/projectPhases2b.png">
+							<img class="fragment" src="images/projectPhases2c.png">
+							<img class="fragment" src="images/projectPhases2d.png">
+						</div>
+					</section>
+					<section>
 						<ul>
 							<li>s'assurer des vrais besoins des utilisateurs</li>
 							<li>se préparer à l'intégration des technologies nécessaires</li>
@@ -1858,14 +1894,39 @@
 					</section>
 					<section>
 						<p>Ce manifeste, pensé pour le développement logiciel, peut apporter de très bons résultats à des projets autres que logiciels.</p>
-						<p>Rester agile en s'inspirant de ce manifeste ! &#x1F642;</p>
+						<p class="fragment">Rester agile en s'inspirant de ce manifeste ! &#x1F642;</p>
 					</section>
 					<section>
-						<img src="images/agile.png">
+						<div class="r-stack">
+							<img src="images/agile.png">
+							<img class="fragment" src="images/agile-1.png">
+							<img class="fragment" src="images/agile-2.png">
+						</div>
 					</section>
 					<section>
+						<p>A chaque itération :</p>
 						<ul>
-							<li>utilisable même dans le cas de réponse à appel d'offres</li>
+							<li>les besoins des utilisateurs sont mieux définis (y compris par le client)</li>
+							<li>les composants techniques sont mieux maîtrisés</li>
+							<li>le système se construit sur des bases solides</li>
+							<li>le client voit l'avancement du développement</li>
+						</ul>
+					</section>
+					<section>
+						<p>A propos de bases solides :</p>
+						<ul>
+							<li>prévoir dès la conception les pertes de connectivité</li>
+							<li>séparer les difficultés : preuves de concepts distinctes</li>
+							<li>tester l'élasticité (la résistance à la tension)</li>
+							<li>décomposer en couches (voir <a href="#/architecture-2" target="_blank">architecture</a>)</li>
+							<li>s'assurer de la solidité d'une couche avant de construire dessus</li>
+							<li>développer des tests automatisés (validation et non régression) au fur et à mesure</li>
+						</ul>
+					</section>
+					<section>
+						<p>Développement par itérations :</p>
+						<ul>
+							<li>utilisable même dans le cas de réponse à appel d'offres (le proposer au client !)</li>
 							<li>bénéfice pour le client et pour l'intégrateur</li>
 							<li>être agile est bien plus important que de respecter un plan de bout en bout !</li>
 						</ul>
@@ -1878,6 +1939,305 @@
 							<li>utiliser du matériel avec possibilité d'extensions</li>
 							<li>utiliser du matériel plus puissant que strictement nécessaire</li>
 							<li>etc.</li>
+						</ul>
+					</section>
+					<section id="gestionDeProjets-6"> <h3>Etudes de cas</h3> 
+					</section>
+					<section> <h4>Tournées de collecte de déchets ménagers</h4>
+						<img src="images/garbage-truck.svg">
+						<div class="pbverysmall">Icons made by <a href="https://www.flaticon.com/authors/freepik" title="Freepik" target="_blank">
+							Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon" target="_blank">www.flaticon.com</a></div>
+					</section>
+					<section>
+						<p>Demande :</p>
+						<ul>
+							<li>fournir quotidiennement les rapports des tournées de collecte des déchets ménagers de la veille :
+								<ul>
+									<li>points de collecte prévus et faits</li>
+									<li>points de collecte prévus et non faits</li>
+									<li>points de collectes non prévus et faits</li>
+									<li>évènements divers : monstres, containers cassés, marche arrière, etc.</li>
+								</ul>
+							</li>
+						</ul>
+					</section>
+					<section>
+						<p>Analyse des besoins :</p>
+						<ul class="pbsmaller">
+							<li>le client pensait à un équipement embarqué remontant en temps réel les données sur réseau cellulaire</li>
+							<li>mais pas de demande de temps réel pour les rapports</li>
+						</ul>
+						<div class="fragment">
+							<p>Proposition :</p>
+							<ul class="pbsmaller">
+								<li>données de position enregistrées dans le véhicule</li>
+								<li>données transmises en fin de journée par câble (!)</li>
+							</ul>
+						</div>
+						<div class="fragment">
+							<p>Gains :</p>
+							<ul class="pbsmaller">
+								<li>coût d'investissement plus faible (pas de module de communication dans l'équipement embarqué)</li>
+								<li>coût de fonctionnement plus faible : pas d'abonnements réseau mobile</li>
+							</ul>
+						</div>
+					</section>
+					<section>
+						<ul>
+							<li>&rArr; importante de la relation avec le client</li>
+							<li>&rArr; séparer le fonctionnel du technique</li>
+						</ul>
+					</section>
+					<section> <h4>Attribution de courses taxis</h4>
+						<img src="images/taxi.svg" height="500">
+						<div class="pbverysmall">Icons made by <a href="https://www.flaticon.com/authors/freepik" title="Freepik" target="_blank">
+							Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon" target="_blank">www.flaticon.com</a></div>
+					</section>
+					<section>
+						<p>Demande :</p>
+						<ul>
+							<li>attribution d'une course taxi au taxi le plus proche</li>
+							<li>surveillance entre taxis</li>
+							<li>alarme agression</li>
+							<li>connexion taximètre</li>
+							<li>réservations</li>
+							<li>etc.</li>
+						</ul>
+					</section>
+					<section>
+						<p>Contexte :</p>
+						<ul>
+							<li>le groupe de taxis n'a aucune expérience d'un tel système</li>
+							<li>le fournisseur :
+								<ul>
+									<li>ne connaît pas le métier de taxi</li>
+									<li>se pose des questions sur certains points techniques</li>
+								</ul>
+							</li>
+						</ul>
+						<div class="fragment">
+							<p>Proposition :</p>
+							<ul>
+								<li>mettre en place une première version minimale rapidement</li>
+								<li>progresser ensuite par étapes</li>
+								<li>changements fonctionnels en fonction de la prise en main</li>
+								<li>acceptation du renforcement du réseau radio suite à trafic supérieur aux prévisions</li>
+							</ul>
+						</div>
+					</section>
+					<section>
+						<ul>
+							<li>&rArr; itérations pour permettre au client de mieux définir ses besoins</li>
+							<li>&rArr; itérations pour permettre au fournisseur de bien prendre en main les composants techniques</li>
+							<li>&rArr; itérations rendant visible l'avancement</li>
+						</ul>
+					</section>
+					<section> <h4>Système d'Aide à l'Exploitation bus urbains</h4>
+						<img src="images/bus.svg" height="500">
+						<div class="pbverysmall">Icons made by <a href="https://www.flaticon.com/authors/freepik" title="Freepik" target="_blank">
+							Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon" target="_blank">www.flaticon.com</a></div>
+					</section>
+					<section>
+						<p>Demande :</p>
+						<ul>
+							<li>prise de service et fin de service conducteur</li>
+							<li>affichage au conducteur de l'arrêt suivant et de l'heure d'arrivée prévue</li>
+							<li>alarme au centre de supervision sur retard ou avance trop importants</li>
+							<li>alarme agression</li>
+							<li>consommation carburant par connexion au débimètre</li>
+							<li>etc.</li>
+						</ul>
+					</section>
+					<section>
+						<p>Contexte :</p>
+						<ul>
+							<li>les conducteurs peuvent se sentir surveillés par le système</li>
+							<li>&rArr; risque de grève</li>
+						</ul>
+						<div class="fragment">
+							<p>Proposition :</p>
+							<ul>
+								<li>procéder par étapes</li>
+								<li>livrer d'abord les fonctions utiles aux conducteurs :
+									<ul>
+										<li>alarme agression</li>
+										<li>messages courts entrants personnels (non prévus au départ)</li>
+									</ul>
+								</li>
+							</ul>
+						</div>
+					</section>
+					<section>
+						<ul>
+							<li>&rArr; déterminer les attentes  des utilisateurs, pas seulement du client</li>
+							<li>&rArr; livrer d'abord ce qui a le plus de valeur pour l'utilisateur</li>
+						</ul>
+					</section>
+					<section> <h4>GPRS</h4>
+						<img src="images/wirelessModem.svg" height="500">
+						<div class="pbverysmall">Icons made by <a href="https://www.flaticon.com/authors/freepik" title="Freepik" target="_blank">
+							Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon" target="_blank">www.flaticon.com</a></div>
+					</section>
+					<section>
+						<p>Contexte :</p>
+						<ul>
+							<li>premier service de transmission de données par paquets sur réseau cellulaire GSM</li>
+							<li>présenté par les opérateurs comme permettant de passer des réseaux fixes aux réseaux 
+								mobiles de façon transparente</li>
+						</ul>
+					</section>
+					<section>
+						<p>Réalité :</p>
+						<ul>
+							<li>deux caractéristiques non documentées :
+								<ul>
+									<li>fermeture de session TCP si pas d'échanges pendant n minutes</li>
+									<li>fermeture du context radio toutes les n heures même si échanges</li>
+								</ul>
+							</li>
+							<li>pas un problème pour les développeurs habitués aux réseaux radio</li>
+							<li>mais un vrai problème pour les autres (ex. : utilisation d'un routeur LAN)</li>
+						</ul>
+					</section>
+					<section>
+						<ul>
+							<li>&rArr; lire la doc technique ne suffit pas, il faut tester</li>
+							<li>&rArr; tenter de transporter dans un domaine les solutions d'un autre domaine peut être une mauvaise idée</li>
+							<li>&rArr; intégrer la gestion des erreurs dès le départ</li>
+						</ul>
+					</section>
+					<section> <h4>Sous-traitance de la réalisation d'un équipement embarqué</h4>
+						<img src="images/pcb-board.svg" height="400">
+						<div class="pbverysmall">Icons made by <a href="https://www.flaticon.com/authors/freepik" title="Freepik" target="_blank">
+							Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon" target="_blank">www.flaticon.com</a></div>
+					</section>
+					<section>
+						<p>Contexte :</p>
+						<ul>
+							<li>besoin d'un équipement embarqué destiné à contrôler un émetteur-récepteur et un combiné audio/clavier</li>
+							<li>réalisation sous-traitée à un grand équipementier radio</li>
+						</ul>
+						<div class="fragment">
+							<p>Résultat :</p>
+							<ul>
+								<li>livraison tardive</li>
+								<li>des tests de charge exhibent une erreur de conception électronique et une bogue logicielle majeure</li>
+								<li>délai trop court pour corriger l'électronique</li>
+								<li>un contournement logiciel est heureusement trouvé</li>
+							</ul>
+						</div>
+					</section>
+					<section>
+						<ul>
+							<li>&rArr; tester l'élasticité au plus tôt</li>
+							<li>&rArr; un grand groupe peut fort bien faire de la mauvaise qualité</li>
+							<li>&rArr; avoir une vision globale (ici : matériel + logiciel)</li>
+						</ul>
+					</section>
+					<section> <h4>Sous-traitance de la réalisation d'un équipement embarqué - suite</h4>
+						<img src="images/pcb-board.svg" height="400">
+						<div class="pbverysmall">Icons made by <a href="https://www.flaticon.com/authors/freepik" title="Freepik" target="_blank">
+							Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon" target="_blank">www.flaticon.com</a></div>
+					</section>
+					<section>
+						<p>Contexte :</p>
+						<ul>
+							<li>demande d'un version corrigée de l'équipement</li>
+							<li>l'équipementier propose un équipement qui permet également de répondre à d'autres clients
+								<ul>
+									<li>&rArr; trop complexe</li>
+									<li>&rArr; trop cher</li>
+								</ul>
+							</li>
+						</ul>
+						<div class="fragment">
+							<p>Résultat :</p>
+							<ul>
+								<li>conception internalisée</li>
+								<li>coûteux sur le court terme</li>
+								<li>mais très bon retour sur investissement sur le long terme :
+									<ul>
+										<li>parfaite adaptation aux besoins</li>
+										<li>production adaptée à chaque client (carte d'extension, composants non montés)</li>
+									</ul>
+								</li>
+							</ul>
+						</div>
+					</section>
+					<section>
+						<ul>
+							<li>&rArr; dans un système à objets connectés, l'équipement connecté est le c&oelig;ur technique : 
+								le maîtriser est nécessaire</li>
+							<li class="fragment">&rArr; cet exemple est assez ancien. Aujourd'hui, la conception aurait pu être 
+								dérivée d'une carte existante</li>
+						</ul>
+					</section>
+					<section> <h4>Dysfonctionnement d'un équipement embarqué</h4>
+						<img src="images/pcb-board.svg" height="400">
+						<div class="pbverysmall">Icons made by <a href="https://www.flaticon.com/authors/freepik" title="Freepik" target="_blank">
+							Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon" target="_blank">www.flaticon.com</a></div>
+					</section>
+					<section>
+						<p class="pbsmaller">Contexte :</p>
+						<ul class="pbsmaller">
+							<li>un millier d'équipements embarqués, installés dans des véhicules, cessent de fonctionner</li>
+							<li>la fonction de mise à jour à distance (sur réseau cellulaire) ne fonctionne pas</li>
+							<li>un audit de l'équipement est demandé</li>
+						</ul>
+						<div class="fragment">
+							<p class="pbsmaller">Résultat de l'audit :</p>
+							<ul class="pbsmaller">
+								<li>le logiciel est de très mauvaise qualité</li>
+								<li>il a été écrit par un développeur sénior. Mais dont l'expérience est dans les applis web</li>
+								<li>la fonction de mise à jour à distance écrit directement dans la mémoire la nouvelle version reçue, 
+									et sans contrôle de flux :
+									<ul>
+										<li>si perte de couverture pendant la mise à jour, l'équipement a un logiciel incomplet</li>
+										<li>si réseau trop rapide, perte de données &rArr; échec de la mise à jour</li>
+									</ul>
+								</li>
+							</ul>
+						</div>
+					</section>
+					<section>
+						<ul>
+							<li>&rArr; le chef de projet est en faute : il n'a pas assigné le bon profil à la tâche</li>
+							<li>&rArr; le chef de projet n'avait pas le bon profil &rArr; son responsable est en faute</li>
+							<li>&rArr; le développement logiciel n'est pas un monde monolithique : développer pour l'embarqué est
+								différent de développer un frontal web, ce qui est différent de développer un dorsal applicatif...
+							</li>
+						</ul>
+					</section>
+					<section> <h4>Capteur autonome en énergie, avec remontées de données</h4>
+						<img src="images/solar-panel.svg" height="400">
+						<div class="pbverysmall">Icons made by <a href="https://www.flaticon.com/authors/freepik" title="Freepik" target="_blank">
+							Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon" target="_blank">www.flaticon.com</a></div>
+					</section>
+					<section>
+						<p>Demande :</p>
+						<ul>
+							<li>concevoir un capteur de particules fines autonome en énergie </li>
+							<li>le capteur doit remonter régulièrement les mesures vers une application distante</li>
+						</ul>
+						<div class="fragment">
+							<p>Réponse :</p>
+							<ul>
+								<li>carte électronique avec microcontrôleur basse consommation</li>
+								<li>batterie rechargée par panneau solaire</li>
+								<li>mais protocole de remontée des données très énergivore :
+									<ul>
+										<li>données remontées en ASCII au lieu de binaire</li>
+										<li>utilisation de FTP au lieu d'un protocole applicatif simple sur TCP ou même UDP</li>
+									</ul>
+								</li>
+							</ul>
+						</div>
+					</section>
+					<section>
+						<ul>
+							<li>le concepteur était plutôt bon en capteurs mais très moyen en protocoles de communication</li>
+							<li>&rArr; savoir évaluer son niveau de compétence par domaine, pour savoir quand demander de l'aide</li>
+							<li>&rArr; avoir une vision globale (matériel + logiciel)</li>
 						</ul>
 					</section>
 				</section>
