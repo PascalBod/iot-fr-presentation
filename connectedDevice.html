@@ -166,6 +166,15 @@
 					<img src="images/computerVirtualMemory.png">
 				</section>
 				<section>
+					<p>Rôles principaux de la mémoire virtuelle :</p>
+					<ul>
+						<li>fournir à chaque processus un espace mémoire personnel</li>
+						<li>assurer l'isolation entre ces espaces personnels</li>
+						<li>assurer l'isolation entre les processus et l'OS</li>
+						<li>éventuellement, fournir plus de mémoire qu'il n'y en a physiquement</li>
+					</ul>
+				</section>
+				<section>
 					<h4>Microcontrôleur</h4>
 					<ul>
 						<li>un ordinateur dans une puce :
@@ -1025,7 +1034,7 @@
 				</section>
 				<section>
 					<ul>
-						<li>normalement, Linux nécessite une MMU (Memory Management Unit)</li>
+						<li>normalement, Linux nécessite une MMU (Memory Management Unit) &rArr; mémoire virtuelle</li>
 						<li>le noyau peut être configuré pour fonctionner sans MMU
 							<ul>
 								<li>grâce au projet μClinux</li>
@@ -1149,6 +1158,13 @@
 						<li>etc.</li>
 					</ul>
 					<p>(services analogues à ceux d'un OS)</p>
+				</section>
+				<section>
+					<p>Différence (très importante !) par rapport à un OS : pas de mémoire virtuelle.</p>
+					<ul>
+						<li>une tâche peut planter une autre tâche</li>
+						<li>une tâche peut planter l'application globale</li>
+					</ul>
 				</section>
 				<section>
 					<h5>Bare metal</h5>
