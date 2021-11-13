@@ -282,7 +282,7 @@
 					</div>
 				</section>
 				<section>
-					<h4>Caractéristiques importantes ?</h4>
+					<h4>Caractéristiques importantes équipement/microcontrôleur ?</h4>
 					<ul>
 						<li>dépendent de l'application !</li>
 						<li>exemple :
@@ -295,7 +295,7 @@
 								<li>temps de cycle instruction</li>
 								<li>mémoire (quantité, type, extensible...)</li>
 								<li>taille registres (8/16/32 bits)</li>
-								<li>nombre de pattes</li>
+								<li>boîtier</li>
 								<li>etc.</li>
 							</ul>
 						</li>
@@ -1382,27 +1382,32 @@
 						<li>la partie générant les événements doit rester active</li>
 					</ul>
 				</section>
-				<section id="sharedVariableWithInterrupt">
-					<h6>Retour sur les interruptions</h6>
+				<section>
+					<h6>Au niveau logiciel</h6>
 				</section>
 				<section>
-					<p>Exemple de la réception d'octets sur une liaison série</p>
+					<p>Exemple : réception d'octets sur une liaison série</p>
 					<img src="images/serialLinkInterrupt.png">
 				</section>
 				<section>
+					<h6>Variables globales</h6>
+                    <pre><code data-trim data-noescape>
+                        bool rec_byte_event = false;
+                        uint8_t rec_byte;
+                    </code></pre>
 					<h6>Gestionnaire de l'interruption "octet reçu"</h6>
 					<pre><code data-trim data-noescape>
-						int receivedByte = getByteFromSerial();
-						moveByteToBuffer(receivedByte, rxBuffer_ptr);
-						receivedByteEvent = true;
+						rec_byte = get_byte_from_uart();
+						rec_byte_event = true;
 					</code></pre>
 					<h6>Tâche de fond</h6>
 					<pre><code data-trim data-noescape>
 						while (true) {
 							...
-							if (receivedByteEvent) {
-								receivedByteEvent = false;
-								processReceivedBytes();
+							if (rec_byte_event) {
+								rec_byte_event = false;
+								// Process rec_byte.
+                                ...
 							}
 							...
 						}
@@ -1411,55 +1416,28 @@
 				<section>
 					<img src="images/backgroundIntDetailedSerialLink.png">
 				</section>
-				<section>
-					<p>Question : l'utilisation de <code>receivedByteEvent</code> peut faire perdre le dernier octet reçu. Pourquoi ?</p>
-				</section>
-				<section>
-					<p>Réponse :</p>
-					<img src="images/backgroundIntDetailedSerialLink-1.png" height="400">
-					<p class="pbcenter">Cas fréquent - OK.</p>
-				</section>
-				<section>
-					<p>Si un second octet est reçu entre le test et le début du traitement :</p>
-					<img src="images/backgroundIntDetailedSerialLink-2.png" height="400">
-					<p class="pbcenter">L'information de réception du second caractère est perdue.</p>
-				</section>
-				<section>
-					<p>Solution : rendre la section de code test + écriture de <code>receivedByteEvent</code> atomique.</p>
-					<pre><code data-trim data-noescape>
-						bool testAndReset(bool eventFlag) {
-							bool result;
-							disableInterrupts();
-							if (eventFlag) {
-								eventFlag = false;
-								result = true;
-							} else {
-								result = false;
-							}
-							enableInterrupts();
-							return result;
-						}
-
-						while (true) {
-							...
-							if (testAndReset(receivedByteEvent)) {
-								processReceivedBytes();
-							}
-							...
-						}
-					</code></pre>
-				</section>
-				<section>
-					<p>Bien entendu, ce problème existe pour tout accès à des variables partagées entre 
-						le gestionnaire d'interruption et la tâche de fond.</p>
-				</section>
-				<section>
-					<p>Question : a-t-on un autre problème de ce type dans notre code de réception d'octets ?</p>
-				</section>
-				<section>
-					<p>Réponse : oui ! Pour l'octet reçu.</p>
-					<p>Il faut aussi protéger son traitement de façon analogue.</p>
-				</section>
+                <section>
+					<p>Que se passe-t-il si la tâche de fond a parfois trop de choses à faire, et ne 
+						peut pas vérifier assez souvent si un octet a été reçu ?
+					</p>
+                    <p class="fragment">Des octets peuvent être perdus.</p>
+                </section>
+                <section>
+                    <p>Solution habituelle : </p>
+                    <ul>
+						<li class="fragment">la routine d'interruption stocke les octets reçus dans un tampon</li>
+                        <li class="fragment">quand elle peut, la tâche de fond traite le contenu du tmapon</li>
+                    </ul>
+                </section>
+                <section>
+					<p>Attention : le tampon est modifié par la routine d'interruption 
+						(quand un octet est reçu), et par la tâche de fond (quand les octets sont 
+						extraits du tampon)
+					</p>
+					<p class="fragment">Un bon moyen de gérer cela : un tampon circulaire, avec
+						accès atomiques (voir plus loin)
+					</p>
+                </section>
 				<section>
 					<h6>Modèles de conception <em>(design patterns)</em> utiles</h6>
 				</section>
@@ -1567,7 +1545,7 @@
 					<ul>
 						<li>tableau utilisé comme interface entre un producteur de données et un consommateur de données</li>
 						<li>permet un découplage entre le producteur et le consommateur</li>
-						<li>si production plus rapide que consommation : perte des données les plus anciennes ou perte des nouvelles données</li>
+						<li class="fragment">si production plus rapide que consommation : perte des données les plus anciennes ou perte des nouvelles données</li>
 					</ul>
 				</section>
 				<section>
@@ -1642,8 +1620,7 @@
 				</section>
 				<section>
 					<p>Attention : si le tampon circulaire est partagé entre un gestionnaire d'interruption et la tâche de fond,
-						rendre atomiques les modifications du tampon (voir <a href="#/sharedVariableWithInterrupt">
-							<em>Retour sur les interruptions</em></a>).
+						rendre atomiques les modifications du tampon.
 					</p>
 				</section>
 				<section>
