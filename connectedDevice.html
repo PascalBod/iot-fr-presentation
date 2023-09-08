@@ -68,36 +68,49 @@
 					<h3>Evolution du matériel</h3>
 				</section>
 				<section>
-					<h4>1985 - l'ordinateur le plus puissant du monde</h4>
-					<img src="images/cray2.jpg">
-					<div class="pbverysmall">Source : <a href="https://images.nasa.gov/details-ARC-1986-AC86-0746-2"
-							title="NASA" target="_blank">NASA</a></div>
+					<h4>1982 - Cray X-MP</h4>
+					<img src="images/CRAY-X-MP-1-1.jpg" height="500">
+					<div class="pbverysmall">Source : <a href="https://www.hpe.com/us/en/compute/hpc/cray.html"
+							title="HPE" target="_blank">HPE</a></div>
 				</section>
 				<section>
-					<p>Cray-2</p>
 					<ul>
-						<li>1,9 GFLOPS (giga floating-point operations per second)</li>
-						<li>38 millions US$ (coût ramené à 2020)</li>
+					    <li>l'ordinateur le plus puissant au monde</li>
+						<li>0,94 GFLOPS (giga floating-point operations per second)</li>
+						<li>prix : environ 15 millions US$ (équivalent à 45 millions US$ en 2022)</li>
 					</ul>
+                    <div class="pbverysmall">Sources : 
+                        <a href="https://www.hpe.com/us/en/compute/hpc/cray.html"
+                            title="HPE" target="_blank">HPE</a>
+                        <a href="https://www2.cisl.ucar.edu/ncar-supercomputing-history/cx"
+                            title="NCAR" target="_blank">NCAR</a>
+                    </div>                    					
 				</section>
 				<section>
-					<h4>2020 - iPhone 11</h4>
-					<img src="images/iphone11.png">
-					<div class="pbverysmall">Source : <a href="https://www.apple.com/fr/iphone-11/" title="Apple"
+					<h4>2022 - iPhone 14</h4>
+					<img src="images/iphone-14-model-unselect-gallery-2-202303_GEO_US.png" height="500">
+					<div class="pbverysmall">Source : <a href="https://www.apple.com/iphone-14/" title="Apple"
 							target="_blank">Apple</a></div>
 				</section>
 				<section>
 					<ul>
-						<li>155 GFLOPS</li>
-						<li>850 US$</li>
+						<li>1,37 TFLOPS (GPU)</li>
+						<li>prix : 800 US$</li>
 					</ul>
+                    <div class="pbverysmall">Sources : 
+                        <a href="https://en.wikipedia.org/wiki/Apple_silicon"
+                            title="Wikipedia" target="_blank">Wikipedia</a>
+                        <a href="https://www.apple.com/shop/buy-iphone/iphone-14"
+                            title="Apple" target="_blank">Apple</a>
+                    </div>					
 				</section>
 				<section>
-					<p>En 35 ans : </p>
+					<p>En 40 ans : </p>
 					<ul>
-						<li>puissance multipliée par 70 (environ)</li>
-						<li>coût divisé par 38000</li>
+						<li>puissance de calcul multipliée par 1&nbsp;400 (environ)</li>
+						<li>coût divisé par 56&nbsp;000</li>
 					</ul>
+					<div class="pbverysmall">(Attention : comparer des puissances de calcul de façon correcte est plus compliqué que comparer deux valeurs en FLOPS. Mais cela donne une idée.)</div>
 				</section>
 				<section>
 					<p class="pbcenter">Que nous réservent les années à venir ?!</p>
@@ -969,6 +982,126 @@
 					<h4>Radio</h4>
 					<p class="pbcenter">Voir section <a href="#/communications">Communications</a></p>
 				</section>
+			</section>
+			<section>
+			    <section id="equipementConnecte-6b">
+			        <h3>Arithmétique virgule flottante</h3>
+			    </section>
+			    <section>
+			        <h4>Plage des nombres entiers</h4>
+			        <ul>
+			            <li>Avec <code class="codeinline">n</code> bits :
+			            <ul>
+			                <li>Entier signé : <code class="codeinline">-2<sup>n-1</sup> &rArr; 2<sup>n-1</sup> - 1</code></li>
+			                <li>Entier non signé : <code class="codeinline">0 &rArr; 2<sup>n</sup> - 1</code></li>
+			            </ul>
+			            </li>
+			        </ul>
+			    </section>
+			    <section>
+			        <h4>Plage des nombres entiers</h4>
+                    <ul>
+                        <li>8 bits :
+                            <ul>
+                                <li><code class="codeinline">-128 &rArr; 127</code></li>
+                                <li><code class="codeinline">0 &rArr; 255</code></li>
+                            </ul>
+                        </li>
+                        <li>32 bits :
+                            <ul>
+                                <li><code class="codeinline">-2&nbsp;147&nbsp;483&nbsp;648 &rArr; 2&nbsp;147&nbsp;483&nbsp;647</code></li>
+                                <li><code class="codeinline">0 &rArr; 4&nbsp;294&nbsp;967&nbsp;296</code></li>
+                            </ul>
+                        </li>
+                    </ul>
+			    </section>
+			    <section>
+			        <h4>Problème</h4>
+			        <ul>
+			            <li>Comment coder :
+			            <ul>
+			                <li>les très grands nombres ?</li>
+			                <li>les nombres rationnels (<code class="codeinline">2/3</code>...) ?</li>
+			                <li>les nombres irrationnels (<code class="codeinline"><math><msqrt><mi>2</mi></msqrt></math></code>...) ?</li>
+			                <li>les nombres transcendants (<code class="codeinline">e</code>...) ?</li>
+			            </ul>
+			            </li>
+			        </ul>
+			    </section>
+			    <section>
+			        <h4>Quand a-t-on besoin de ces types de nombres ?</h4>
+			        <ul>
+			            <li>calculer une (longue) distance sur la surface de la Terre</li>
+			            <li>beaucoup d'autres calculs  &#x1F642;</li>
+			            <li>certains algorithmes d'IA</li>
+			            <li>etc.</li>
+			        </ul>
+			    </section>
+			    <section>
+			        <h4>Une solution : la représentation en virgule flottante</h4>
+			        <ul>
+			            <li><code class="codeinline">signe x mantisse x base<sup>exposant</sup></code></li>
+			            <li>la mantisse définit la précision</li>
+			            <li>l'exposant définit la plage</li>
+			            <li>la base vaut habituellement <code class="codeinline">2</code></li>
+			        </ul>
+			    </section>
+			    <section>
+			        <h4>Un standard : IEEE 754</h4>
+			        <ul>
+			            <li>simple précision : mantisse de 23 bits, exposant de 8 bits</li>
+			            <li>double précision : mantisse de 52 bits, exposant de 11 bits</li>
+			            <li>...</li>
+			        </ul>
+                    <div class="pbverysmall">Source : <a href="https://ieeexplore.ieee.org/document/8766229"
+                        target="_blank">IEEE 754</a></div>			        
+			    </section>
+			    <section>
+			        <h4>De façon plus exacte :</h4>
+			        <ul>
+			            <li>signe : un bit</li>
+			            <li>mantisse : fraction binaire, supérieure ou égale à <code class="codeinline">1</code>
+			                et inférieure à <code class="codeinline">2</code>. Un <code class="codeinline">1</code>
+			                initial est sous-entendu et non codé &rArr; 24 ou 53 bits en fait</li>
+			            <li>exposant : biaisé, de façon à être toujours positif. Le biais vaut 
+			                <code class="codeinline">127</code> ou <code class="codeinline">1024</code></li>
+			        </ul>
+			    </section>
+			    <section>
+			        <h4>Un peu de complexité et des effets de bord</h4>
+			        <ul>
+			            <li>deux valeurs pour 0 : une positive et une négative</li>
+			            <li>deux infinis</li>
+			            <li>NaN (Not a Number - opérations indéterminées ou invalides)</li>
+			            <li>nombres dénormalisés</li>
+			            <li>arrondis
+			        </ul>
+			    </section>
+			    <section>
+			        <h4>Arithmétique virgule flottante et microcontrôleurs</h4>
+			        <ul>
+			            <li>microcontrôleurs entrée de gamme : pas d'instructions pour l'arithmétique virgule flottante</li>
+			            <li>autres microcontrôleurs : FPU (Floating Point Unit)</li>
+			        </ul>
+			    </section>
+			    <section>
+			        <h4>Solution logicielle quand pas de FPU</h4>
+			        <p>Librairie virgule flottante :</p>
+			        <ul>
+			            <li>implémente l'arithmétique virgule flottante en logiciel</li>
+			            <li>inconvénients :
+			            <ul>
+			                <li>augmente la taille du code binaire</li>
+			                <li>augmente le nombre d'instructions à exécuter</li>
+			                <li>peut être sous licence payante</li>
+			            </ul>
+			            </li>
+			        </ul>
+			    </section>
+			    <section>
+			        <h4>Autre solution, parfois possible : utiliser uniquement des entiers</h4>
+			        <p>Exemple : calculer une courte distance sur la surface de la Terre (jusqu'à quelques dizaines de km)</p>
+			    </section>
 			</section>
 			<section>
 				<section id="equipementConnecte-7">
